@@ -48,30 +48,51 @@ body {
     border-right: 1px solid rgba(26, 45, 66, 0.08);
 }
 
-/* SHIFT BOX */
+/* =========================
+   SIDEBAR SHIFT
+========================= */
 .shift-box {
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 16px 18px;
-    margin-bottom: 24px; /* JARAK PAGI & MALAM */
-    box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 26px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+}
+
+/* Shift Pagi - terang */
+.shift-box:first-child {
+    background: #F5F7F8;
+}
+
+/* Shift Malam - sedikit lebih gelap */
+.shift-box:last-child {
+    background: #E9EDF0;
 }
 
 .shift-box h3 {
     font-size: 13px;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
+    color: #2E4156;
+}
+
+/* HILANGKAN MARKER */
+.shift-box ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
 }
 
 .shift-box li {
     font-size: 13px;
-    padding: 6px 0;
-    border-bottom: 1px solid #eee;
+    padding: 7px 0;
+    color: #2E4156;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
 .shift-box li:last-child {
     border-bottom: none;
 }
+
 
 /* ===============================
    CONTENT
