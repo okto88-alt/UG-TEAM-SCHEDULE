@@ -31,4 +31,140 @@ const scheduleData = [
     date: "18-Dec-2025",
     SURIA88: ["Nibras", "Dea"],
     HAKABET: ["Kenny", "Kris"],
-    VIOBET: ["Chan]()
+    VIOBET: ["Chandy", "Heno"],
+    TEMPO88: ["Firman", "Alfan"],
+    FILA88: ["Angga", "Valvi"],
+    IJOBET: ["Jerry", "Sindy"],
+    HAHAWIN88: ["Kenny, Firman", "Kris, Alfan"]
+  },
+  {
+    date: "19-Dec-2025",
+    SURIA88: ["Nibras", "Dea"],
+    HAKABET: ["Andi", "Kris"],
+    VIOBET: ["Anggie", "Heno"],
+    TEMPO88: ["Kenny", "Alfan"],
+    FILA88: ["Angga", "Kheiren"],
+    IJOBET: ["Jerry", "Sindy"],
+    HAHAWIN88: ["Andi, Anggie", "Kris, Alfan"]
+  },
+  {
+    date: "20-Dec-2025",
+    SURIA88: ["Kenny", "Heno"],
+    HAKABET: ["Andi", "Kris"],
+    VIOBET: ["Anggie", "Vindy"],
+    TEMPO88: ["Firman", "Alfan"],
+    FILA88: ["Angga", "Kheiren"],
+    IJOBET: ["Jerry", "Sindy"],
+    HAHAWIN88: ["Andi, Anggie", "Kris, Alfan"]
+  },
+  {
+    date: "21-Dec-2025",
+    SURIA88: ["Nibras", "Dea"],
+    HAKABET: ["Andi", "Valvi"],
+    VIOBET: ["Anggie", "Heno"],
+    TEMPO88: ["Firman", "Alfan"],
+    FILA88: ["Angga", "Kheiren"],
+    IJOBET: ["Jerry", "Sindy"],
+    HAHAWIN88: ["Andi, Anggie", "Valvi, Alfan"]
+  },
+  {
+    date: "22-Dec-2025",
+    SURIA88: ["Nibras", "Dea"],
+    HAKABET: ["Andi", "Valvi"],
+    VIOBET: ["Anggie", "Heno"],
+    TEMPO88: ["Firman", "Alfan"],
+    FILA88: ["Angga", "Kheiren"],
+    IJOBET: ["Jerry", "Sindy"],
+    HAHAWIN88: ["Andi, Anggie", "Valvi, Alfan"]
+  },
+  {
+    date: "23-Dec-2025",
+    SURIA88: ["Nibras", "Dea"],
+    HAKABET: ["Andi", "Valvi"],
+    VIOBET: ["Anggie", "Vindy"],
+    TEMPO88: ["Firman", "Alfan"],
+    FILA88: ["Angga", "Kheiren"],
+    IJOBET: ["Jerry", "Kris"],
+    HAHAWIN88: ["Kenny", "Valvi, Alfan"]
+  }
+];
+
+/* ======================================
+   RENDER TABLE
+====================================== */
+const tbody = document.getElementById("scheduleBody");
+const searchInput = document.getElementById("searchInput");
+
+function renderTable(data) {
+  tbody.innerHTML = "";
+
+  data.forEach(day => {
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+      <td>${day.date}</td>
+      <td>${day.SURIA88.join("<br>")}</td>
+      <td>${day.HAKABET.join("<br>")}</td>
+      <td>${day.VIOBET.join("<br>")}</td>
+      <td>${day.TEMPO88.join("<br>")}</td>
+      <td>${day.FILA88.join("<br>")}</td>
+      <td>${day.IJOBET.join("<br>")}</td>
+      <td>${day.HAHAWIN88.join("<br>")}</td>
+    `;
+
+    tbody.appendChild(tr);
+  });
+}
+
+/* ======================================
+   SEARCH STAFF NAME
+====================================== */
+function searchStaff(keyword) {
+  if (!keyword) {
+    renderTable(scheduleData);
+    return;
+  }
+
+  const result = [];
+
+  scheduleData.forEach(day => {
+    Object.keys(day).forEach(key => {
+      if (key === "date") return;
+
+      day[key].forEach(name => {
+        if (name.toLowerCase().includes(keyword.toLowerCase())) {
+          result.push({
+            date: day.date,
+            web: key,
+            name: name
+          });
+        }
+      });
+    });
+  });
+
+  tbody.innerHTML = "";
+
+  result.forEach(item => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${item.date}</td>
+      <td colspan="7">
+        <strong>${item.name}</strong> — ${item.web}
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+/* ======================================
+   EVENT LISTENER
+====================================== */
+searchInput.addEventListener("input", e => {
+  searchStaff(e.target.value.trim());
+});
+
+/* ======================================
+   INIT
+====================================== */
+renderTable(scheduleData);
