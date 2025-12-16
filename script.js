@@ -1,9 +1,29 @@
-const shiftPagi = ["Dea", "Kris", "Valvi"];
-const shiftMalam = ["Heno", "Alfan", "Kheiren", "Sindy"];
+const shiftPagi = ["Chandy", "Kenny", "Anggie", "Andy", "Firman", "Nibras", "Angga", "Jerry"];
+const shiftMalam = ["Vindy", "Kris", "Dea", "Valvi", "Heno", "Alfan", "Kheiren", "Sindy"];
 
 const schedule = [
     {
-        date: "10-Dec-2025",
+        date: "17-Dec-2025",
+        pagi: {
+            SURIA88: "Dea",
+            HAKABET: "Kris",
+            VIOBET: "Heno",
+            TEMPO88: "Alfan",
+            FILA88: "Kheiren",
+            IJOBET: "Sindy",
+            HAHAWIN88: "Valvi"
+        },
+        malam: {
+            SURIA88: "Heno",
+            HAKABET: "Valvi",
+            VIOBET: "Dea",
+            TEMPO88: "Kris",
+            FILA88: "Alfan",
+            IJOBET: "Kheiren",
+            HAHAWIN88: "-"
+        }
+            {
+        date: "18-Dec-2025",
         pagi: {
             SURIA88: "Dea",
             HAKABET: "Kris",
@@ -78,3 +98,4 @@ function searchNama() {
 /* INIT */
 loadSidebar();
 loadSchedule();
+
