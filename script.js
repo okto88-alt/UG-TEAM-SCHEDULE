@@ -169,9 +169,6 @@ const scheduleData = [
 ];
 
 
-/* ======================================
-   RENDER TABLE
-====================================== */
 /*********************************
  * FORMAT TEXT
  *********************************/
@@ -218,18 +215,82 @@ function renderTable(data) {
 }
 
 /* ======================================
-   SEARCH BY NAME (WORKING)
+   SEARCH BY NAME → SUMMARY MODE
 ====================================== */
-function searchByName(value) {
-  const keyword = value.toLowerCase().trim();
-  const rows = document.querySelectorAll("#scheduleBody tr");
+const searchInput = document.getElementById("searchInput");
+const tbody = document.getElementById("scheduleBody");
 
-  rows.forEach(row => {
-    row.style.display = row.textContent.toLowerCase().includes(keyword)
-      ? ""
-      : "none";
+function searchByNameSummary(keyword) {
+  const q = keyword.toLowerCase().trim();
+  tbody.innerHTML = "";
+
+  if (!q) {
+    renderTable(scheduleData);
+    return;
+  }
+
+  const results = [];
+
+  scheduleData.forEach(day => {
+    Object.keys(day).forEach(key => {
+      if (
+        key === "date" ||
+        key === "OFFDAY"
+      ) return;
+
+      const pagi = day[key][0] || "";
+      const malam = day[key][1] || "";
+
+      if (pagi.toLowerCase().includes(q)) {
+        results.push({
+          date: day.date,
+          name: pagi,
+          web: key,
+          shift: "Pagi"
+        });
+      }
+
+      if (malam.toLowerCase().includes(q)) {
+        results.push({
+          date: day.date,
+          name: malam,
+          web: key,
+          shift: "Malam"
+        });
+      }
+    });
+  });
+
+  if (results.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="9" style="text-align:center; padding:20px;">
+          Tidak ada jadwal ditemukan
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  results.forEach(r => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${r.date}</td>
+      <td colspan="2"><strong>${r.name}</strong></td>
+      <td colspan="3">${r.web}</td>
+      <td colspan="3">${r.shift}</td>
+    `;
+    tbody.appendChild(tr);
   });
 }
+
+/* ======================================
+   INPUT LISTENER
+====================================== */
+searchInput.addEventListener("input", e => {
+  searchByNameSummary(e.target.value);
+});
+
 
 /* ======================================
    INIT
@@ -242,6 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("searchInput")
     .addEventListener("input", e => searchByName(e.target.value));
 });
+
 
 
 
