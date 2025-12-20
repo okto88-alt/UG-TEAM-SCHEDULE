@@ -1,75 +1,69 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Jadwal Shift Web</title>
-
-    <!-- FONT -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-
-    <!-- CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Schedule Panel</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body data-theme="light">
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Team Schedule Panel</h1>
+            <div class="current-date" id="currentDate"></div>
+        </header>
 
-<div class="app">
-
-    <!-- LEFT -->
-   <aside class="sidebar">
-
-    <div class="shift-box">
-        <h3>Shift Pagi</h3>
-        <ul id="shiftPagi"></ul>
-    </div>
-
-    <div class="shift-box">
-        <h3>Shift Malam</h3>
-        <ul id="shiftMalam"></ul>
-    </div>
-
-</aside>
-    
-
-    <!-- RIGHT -->
-    <main class="content">
-
-        <!-- SEARCH -->
-        <div class="top-bar">
-<input
-  id="searchInput"
-  placeholder="Cari nama staff..."
-  oninput="searchByName(this.value)"
-/>
-
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search staff by name..." class="search-input">
+                <button class="search-btn" onclick="searchStaff()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
 
-        <!-- SEARCH RESULT -->
-        <div id="searchResult" class="search-result"></div>
+        <div class="shift-summary">
+            <div class="shift-row">
+                <span class="shift-label">🌅 DAY SHIFT :</span>
+                <span class="shift-names">Chandy | Kenny | Anggie | Andi | Firman | Nibras | Angga | Jerry</span>
+            </div>
+            <div class="shift-row">
+                <span class="shift-label">🌙 NIGHT SHIFT :</span>
+                <span class="shift-names">Vindy | Kris | Heno | Dea | Alfan | Valvi | Kheiren | Sindy</span>
+            </div>
+        </div>
 
-        <!-- TABLE -->
-        <div class="table-wrapper">
-            <table>
+        <div class="schedule-table-section">
+            <h2>Weekly Schedule</h2>
+            <table class="schedule-table" id="scheduleTable">
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>SURIA88</th>
-                        <th>HAKABET</th>
-                        <th>VIOBET</th>
-                        <th>TEMPO88</th>
-                        <th>FILA88</th>
-                        <th>IJOBET</th>
-                        <th>HAHAWIN88</th>
-                        <th>OFF DAY UG</th>
+                        <th class="date-column">Date</th>
+                        <th class="shift-column">SURIA88</th>
+                        <th class="shift-column">HAKABET</th>
+                        <th class="shift-column">VIOBET</th>
+                        <th class="shift-column">TEMPO88</th>
+                        <th class="shift-column">FILA88</th>
+                        <th class="shift-column">IJOBET</th>
+                        <th class="shift-column">HAHAWIN88</th>
+                        <th class="shift-column">OFF DAY UG</th>
                     </tr>
                 </thead>
-                <tbody id="scheduleBody"></tbody>
+                <tbody id="scheduleTableBody">
+                    <!-- Will be populated by JavaScript -->
+                </tbody>
             </table>
         </div>
 
-    </main>
+        <div class="staff-details" id="staffDetails" style="display: none;">
+            <h3>Staff Details</h3>
+            <div id="staffDetailsContent"></div>
+        </div>
+    </div>
 
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
