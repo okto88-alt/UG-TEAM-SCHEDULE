@@ -168,87 +168,67 @@ const scheduleData = [
 /* ======================================
    RENDER TABLE
 ====================================== */
-const tbody = document.getElementById("scheduleBody");
-const searchInput = document.getElementById("searchInput");
+/*********************************
+ * FORMAT TEXT
+ *********************************/
+function formatShift(list) {
+  if (!list || list.length === 0) return "-";
+  return list.join("<br><br>");
+}
 
+function formatOff(list) {
+  if (!list || list.length === 0) return "-";
+  return list.join("<br>");
+}
+
+/*********************************
+ * RENDER TABLE
+ *********************************/
 function renderTable(data) {
+  const tbody = document.querySelector("tbody");
   tbody.innerHTML = "";
 
   data.forEach(day => {
     const tr = document.createElement("tr");
 
     tr.innerHTML = `
-      <td>${day.date}</td>
-      <td>${day.SURIA88.join("<br><br>")}</td>
-      <td>${day.HAKABET.join("<br><br>")}</td>
-      <td>${day.VIOBET.join("<br><br>")}</td>
-      <td>${day.TEMPO88.join("<br><br>")}</td>
-      <td>${day.FILA88.join("<br><br>")}</td>
-      <td>${day.IJOBET.join("<br><br>")}</td>
-      <td>${day.HAHAWIN88.join("<br><br>")}</td>
+      <td class="date-col">${day.date}</td>
+      <td>${formatShift(day.SURIA88)}</td>
+      <td>${formatShift(day.HAKABET)}</td>
+      <td>${formatShift(day.VIOBET)}</td>
+      <td>${formatShift(day.TEMPO88)}</td>
+      <td>${formatShift(day.FILA88)}</td>
+      <td>${formatShift(day.IJOBET)}</td>
+      <td>${formatShift(day.HAHAWIN88)}</td>
+      <td class="off-day">${formatOff(day.OFF_DAY_UG)}</td>
     `;
 
     tbody.appendChild(tr);
   });
 }
 
-/* ======================================
-   SEARCH STAFF NAME
-====================================== */
-function searchStaff(keyword) {
-  if (!keyword) {
-    renderTable(scheduleData);
-    return;
-  }
+/*********************************
+ * SEARCH STAFF (FIXED)
+ *********************************/
+function searchStaff() {
+  const keyword = document
+    .getElementById("searchInput")
+    .value
+    .toLowerCase()
+    .trim();
 
-  const result = [];
+  const rows = document.querySelectorAll("tbody tr");
 
-  scheduleData.forEach(day => {
-    Object.keys(day).forEach(key => {
-      if (key === "date") return;
-
-      day[key].forEach(name => {
-        if (name.toLowerCase().includes(keyword.toLowerCase())) {
-          result.push({
-            date: day.date,
-            web: key,
-            name: name
-          });
-        }
-      });
-    });
-  });
-
-  tbody.innerHTML = "";
-
-  result.forEach(item => {
-    const tr = document.createElement("tr");
-tr.innerHTML = `
-  <td>${day.date}</td>
-  <td>${formatShift(day.SURIA88)}</td>
-  <td>${formatShift(day.HAKABET)}</td>
-  <td>${formatShift(day.VIOBET)}</td>
-  <td>${formatShift(day.TEMPO88)}</td>
-  <td>${formatShift(day.FILA88)}</td>
-  <td>${formatShift(day.IJOBET)}</td>
-  <td>${formatShift(day.HAHAWIN88)}</td>
-  <td>${day.OFFDAY.length ? formatShift(day.OFFDAY) : "-"}</td>
-`;
-
-    tbody.appendChild(tr);
+  rows.forEach(row => {
+    const rowText = row.textContent.toLowerCase();
+    row.style.display = rowText.includes(keyword) ? "" : "none";
   });
 }
 
-/* ======================================
-   EVENT LISTENER
-====================================== */
-searchInput.addEventListener("input", e => {
-  searchStaff(e.target.value.trim());
+/*********************************
+ * INIT
+ *********************************/
+document.addEventListener("DOMContentLoaded", () => {
+  renderTable(scheduleData);
 });
-
-/* ======================================
-   INIT
-====================================== */
-renderShiftList();
-renderTable(scheduleData);
 
