@@ -212,29 +212,25 @@ function renderTable(data) {
 /*********************************
  * SEARCH STAFF (FIXED)
  *********************************/
-function searchStaff(keyword) {
-  if (!keyword) {
-    renderTable(scheduleData);
-    return;
-  }
+function searchNama() {
+    const q = document.getElementById("searchInput").value.toLowerCase();
+    const result = [];
 
-  const result = [];
-
-  scheduleData.forEach(day => {
-    Object.keys(day).forEach(key => {
-      if (key === "date") return;
-
-      day[key].forEach(name => {
-        if (name.toLowerCase().includes(keyword.toLowerCase())) {
-          result.push({
-            date: day.date,
-            web: key,
-            name: name
-          });
+    schedule.forEach(day => {
+        for (let web in day.pagi) {
+            if (day.pagi[web].toLowerCase().includes(q)) {
+                result.push(`${day.date} | ${day.pagi[web]} | ${web} (Pagi)`);
+            }
         }
-      });
+        for (let web in day.malam) {
+            if (day.malam[web].toLowerCase().includes(q)) {
+                result.push(`${day.date} | ${day.malam[web]} | ${web} (Malam)`);
+            }
+        }
     });
-  });
+
+    document.getElementById("searchResult").innerHTML =
+        q && result.length ? result.join("<br>") : "";
 
 
 /*********************************
@@ -243,5 +239,6 @@ function searchStaff(keyword) {
 document.addEventListener("DOMContentLoaded", () => {
   renderTable(scheduleData);
 });
+
 
 
