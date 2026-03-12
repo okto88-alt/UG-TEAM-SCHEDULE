@@ -230,18 +230,17 @@ function findStaffSchedule(searchTerm) {
 function getScheduleData() {
     return [
         {
-            date: '2026-03-01',
-            dayName: 'Sunday',
+            date: '2026-03-13',
+            dayName: 'Friday',
             morning: {
-            'SURIA88': 'Anggie',
-            'HAKABET': 'Sindy',
+            'SURIA88': 'Andi',
+            'HAKABET': 'Heno',
             'VIOBET': 'Vera',
-            'TEMPO88': 'Firman',
-            'FILA88': 'Angga',
-            'IJOBET': 'Jerry',
-            'HAHAWIN88': 'Kris',
-            'LOLA88': 'Kris',
-            'OFF DAY UG': 'Kheiren'
+            'TEMPO88': 'Kheiren',
+            'FILA88': 'Egi',
+            'IJOBET': 'Kris',
+            'HAHAWIN88': 'Andi',
+            'LOLA88': 'Chandy',
         },
             evening: {
             'SURIA88': 'Heno',
@@ -251,12 +250,12 @@ function getScheduleData() {
             'FILA88': 'Bima',
             'IJOBET': 'Andi',
             'HAHAWIN88': 'Kenny',
-            'OFF DAY UG': '-'
+            'LOLA88': '-'
             }
         },
         {
-            date: '2026-03-02',
-            dayName: 'Monday',
+            date: '2026-03-14',
+            dayName: 'Saturday',
             morning: {
             'SURIA88': 'Anggie',
             'HAKABET': 'Sindy',
@@ -279,8 +278,8 @@ function getScheduleData() {
             }
         },
         {
-            date: '2026-03-03',
-            dayName: 'Tuesday',
+            date: '2026-03-15',
+            dayName: 'Sunday',
         morning: {
             'SURIA88': 'Anggie',
             'HAKABET': 'Sindy',
@@ -303,8 +302,8 @@ function getScheduleData() {
             }
         },
                 {
-            date: '2026-03-04',
-            dayName: 'Wednesday',
+            date: '2026-03-16',
+            dayName: 'Monday',
             morning: {
             'SURIA88': 'Kris',
             'HAKABET': 'Sindy',
@@ -327,8 +326,8 @@ function getScheduleData() {
             }
         },
                         {
-            date: '2026-03-05',
-            dayName: 'Thursday',
+            date: '2026-03-17',
+            dayName: 'Tuesday',
             morning: {
             'SURIA88': 'Heno',
             'HAKABET': 'Sindy',
@@ -351,8 +350,8 @@ function getScheduleData() {
             }
         },
                         {
-            date: '2026-03-06',
-            dayName: 'Friday',
+            date: '2026-03-18',
+            dayName: 'Wednesday',
             morning: {
             'SURIA88': 'Heno',
             'HAKABET': 'Kris',
@@ -375,8 +374,8 @@ function getScheduleData() {
             }
         },
                          {
-            date: '2026-03-07',
-            dayName: 'Saturday',
+            date: '2026-03-19',
+            dayName: 'Thursday',
             morning: {
             'SURIA88': 'Heno',
             'HAKABET': 'Sindy',
@@ -399,8 +398,8 @@ function getScheduleData() {
             }
         },
                                 {
-            date: '2026-03-08',
-            dayName: 'Sunday',
+            date: '2026-03-20',
+            dayName: 'Friday',
             morning: {
             'SURIA88': 'Heno',
             'HAKABET': 'Sindy',
@@ -592,6 +591,7 @@ function generateScheduleTable() {
 
     tableBody.innerHTML = tableHTML;
 }
+
 
 
 
