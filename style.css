@@ -255,7 +255,7 @@ td.action-cell { white-space: nowrap; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .staff-view-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
-.staff-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+.staff-grid { display: flex; flex-direction: column; align-items: center; width: 100%; }
 .staff-card { background: var(--surface); border: 1px solid var(--cream-3); border-radius: var(--r); padding: 18px; box-shadow: var(--s-xs); transition: all .18s ease; }
 .staff-card:hover { border-color: var(--cream-4); box-shadow: var(--s-md); transform: translateY(-2px); }
 .staff-card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
@@ -456,3 +456,142 @@ td.check-cell { text-align: center; padding: 0 8px !important; }
   background: var(--navy); border-color: var(--navy);
   color: #fff;
 }
+/* ============================================ PYRAMID STAFF */
+.pyramid-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 16px 0 24px;
+  width: 100%;
+}
+
+.pyr-tier-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.pyr-tier-label {
+  font-size: .65rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 16px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+.pyr-label-leader    { background: #FEF3C7; color: #92400E; }
+.pyr-label-assistant { background: #E0E7FF; color: #3730A3; }
+.pyr-label-staff     { background: #F0FDF4; color: #166534; }
+
+.pyr-tier {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 14px;
+  width: 100%;
+}
+
+.pyr-connector {
+  width: 2px;
+  height: 28px;
+  background: linear-gradient(to bottom, #d1d5db, transparent);
+  margin: 8px auto;
+}
+
+/* CARDS */
+.pyr-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  padding: 18px 16px 14px;
+  border-radius: 16px;
+  transition: transform .15s, box-shadow .15s;
+  cursor: default;
+  position: relative;
+}
+.pyr-card:hover { transform: translateY(-4px); }
+
+.pyr-card-leader {
+  background: linear-gradient(135deg, #fffbeb, #fef3c7);
+  border: 2px solid #fbbf24;
+  box-shadow: 0 4px 20px rgba(251,191,36,.18);
+  min-width: 120px;
+}
+.pyr-card-assistant {
+  background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+  border: 2px solid #a5b4fc;
+  box-shadow: 0 4px 16px rgba(165,180,252,.18);
+  min-width: 110px;
+}
+.pyr-card-staff {
+  background: #fafafa;
+  border: 1.5px solid #e5e7eb;
+  min-width: 90px;
+}
+.pyr-card-staff:hover { box-shadow: 0 4px 12px rgba(0,0,0,.06); }
+
+/* AVATAR */
+.pyr-avatar {
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; color: #fff;
+  position: relative;
+}
+.pyr-card-leader    .pyr-avatar { width: 60px; height: 60px; font-size: 1.1rem; border-radius: 16px; }
+.pyr-card-assistant .pyr-avatar { width: 54px; height: 54px; font-size: 1rem;  border-radius: 15px; }
+.pyr-card-staff     .pyr-avatar { width: 46px; height: 46px; font-size: .85rem; border-radius: 13px; }
+
+.pyr-crown {
+  position: absolute;
+  top: -10px; left: 50%;
+  transform: translateX(-50%);
+  font-size: .9rem;
+  line-height: 1;
+}
+
+/* NAME */
+.pyr-name {
+  font-size: .78rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  text-align: center;
+}
+.pyr-card-leader .pyr-name { font-size: .85rem; }
+
+/* ROLE BADGE */
+.pyr-role-badge {
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .4px;
+  padding: 2px 9px;
+  border-radius: 10px;
+}
+.pyr-badge-leader    { background: #fbbf24; color: #78350f; }
+.pyr-badge-assistant { background: #a5b4fc; color: #312e81; }
+
+/* CARD ACTIONS */
+.pyr-card-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+.pyr-card-actions .btn-edit,
+.pyr-card-actions .btn-del {
+  font-size: .65rem;
+  padding: 3px 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: inherit;
+}
+.pyr-card-actions .btn-edit { background: #e0e7ff; color: #3730a3; }
+.pyr-card-actions .btn-del  { background: #fee2e2; color: #991b1b; }
+.pyr-card-actions .btn-edit:hover { background: #c7d2fe; }
+.pyr-card-actions .btn-del:hover  { background: #fecaca; }

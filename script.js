@@ -431,7 +431,7 @@ function populateStaffDropdowns(selectedValues = {}) {
 }
 
 // ============================================
-// RENDER STAFF GRID
+// RENDER STAFF PYRAMID (OPTION A)
 // ============================================
 function renderStaffGrid() {
   const grid = document.getElementById('staffGrid');
@@ -439,33 +439,65 @@ function renderStaffGrid() {
   if (!grid) return;
 
   if (!staffData.length) {
-    grid.innerHTML = `<div style="color:var(--text-3);font-size:.9rem;grid-column:1/-1">No staff found.</div>`;
+    grid.innerHTML = `<div style="color:var(--text-3);font-size:.9rem;padding:24px">No staff found.</div>`;
     return;
   }
 
   if (countEl) countEl.textContent = `${staffData.length} members`;
 
-  grid.innerHTML = staffData.map((s, i) => {
-    const initials = s.name.slice(0, 2).toUpperCase();
-    const color = AVATAR_COLORS[i % AVATAR_COLORS.length];
+  const leaders    = staffData.filter(s => s.role === 'leader');
+  const assistants = staffData.filter(s => s.role === 'assistant');
+  const staff      = staffData.filter(s => !s.role || s.role === 'staff');
 
+  function makeCard(s, i, tier) {
+    const initials = s.name.slice(0, 2).toUpperCase();
+    const color = AVATAR_COLORS[staffData.indexOf(s) % AVATAR_COLORS.length];
+    const crown = tier === 'leader' ? '<span class="pyr-crown">👑</span>' : '';
+    const badgeText = tier === 'leader' ? 'Leader' : tier === 'assistant' ? 'Assistant' : '';
+    const badge = badgeText ? `<span class="pyr-role-badge pyr-badge-${tier}">${badgeText}</span>` : '';
     const adminActions = isAdmin ? `
-      <div class="staff-card-actions">
+      <div class="pyr-card-actions">
         <button class="btn-edit" onclick="openEditStaffModal('${s.id}')">Edit</button>
         <button class="btn-del" onclick="openDeleteStaffModal('${s.id}', '${s.name}')">Remove</button>
       </div>` : '';
 
     return `
-      <div class="staff-card">
-        <div class="staff-card-top">
-          <div class="staff-avatar" style="background:${color}">${initials}</div>
-          <div>
-            <div class="staff-name">${s.name}</div>
-          </div>
-        </div>
+      <div class="pyr-card pyr-card-${tier}">
+        <div class="pyr-avatar" style="background:${color}">${crown}${initials}</div>
+        <div class="pyr-name">${s.name}</div>
+        ${badge}
         ${adminActions}
       </div>`;
-  }).join('');
+  }
+
+  grid.innerHTML = `
+    <div class="pyramid-wrap">
+      ${leaders.length ? `
+      <div class="pyr-tier-wrap">
+        <div class="pyr-tier-label pyr-label-leader">👑 Leader</div>
+        <div class="pyr-tier">
+          ${leaders.map((s,i) => makeCard(s, i, 'leader')).join('')}
+        </div>
+      </div>
+      <div class="pyr-connector"></div>` : ''}
+
+      ${assistants.length ? `
+      <div class="pyr-tier-wrap">
+        <div class="pyr-tier-label pyr-label-assistant">⭐ Assistant Leader</div>
+        <div class="pyr-tier">
+          ${assistants.map((s,i) => makeCard(s, i, 'assistant')).join('')}
+        </div>
+      </div>
+      <div class="pyr-connector"></div>` : ''}
+
+      ${staff.length ? `
+      <div class="pyr-tier-wrap">
+        <div class="pyr-tier-label pyr-label-staff">👥 Staff</div>
+        <div class="pyr-tier pyr-tier-staff">
+          ${staff.map((s,i) => makeCard(s, i, 'staff')).join('')}
+        </div>
+      </div>` : ''}
+    </div>`;
 }
 
 // ============================================
@@ -479,6 +511,7 @@ function openAddStaffModal() {
   document.getElementById('staffModalTitle').textContent = 'Add Staff';
   document.getElementById('saveStaffBtnText').textContent = 'Add Staff';
   document.getElementById('staffName').value = '';
+  document.getElementById('staffRole').value = 'staff';
   document.getElementById('staffError').textContent = '';
   document.getElementById('staffModal').classList.add('open');
   setTimeout(() => document.getElementById('staffName').focus(), 100);
@@ -491,6 +524,7 @@ function openEditStaffModal(id) {
   document.getElementById('staffModalTitle').textContent = 'Edit Staff';
   document.getElementById('saveStaffBtnText').textContent = 'Update';
   document.getElementById('staffName').value = s.name;
+  document.getElementById('staffRole').value = s.role || 'staff';
   document.getElementById('staffError').textContent = '';
   document.getElementById('staffModal').classList.add('open');
 }
@@ -501,6 +535,7 @@ function closeStaffModal() {
 
 async function saveStaff() {
   const name = document.getElementById('staffName').value.trim();
+  const role = document.getElementById('staffRole').value;
   const errEl = document.getElementById('staffError');
   const btn = document.getElementById('saveStaffBtn');
 
@@ -512,9 +547,9 @@ async function saveStaff() {
 
   let error;
   if (editStaffId) {
-    ({ error } = await db.from('staff').update({ name }).eq('id', editStaffId));
+    ({ error } = await db.from('staff').update({ name, role }).eq('id', editStaffId));
   } else {
-    ({ error } = await db.from('staff').insert({ name, is_active: true }));
+    ({ error } = await db.from('staff').insert({ name, role, is_active: true }));
   }
 
   btn.disabled = false;
