@@ -509,12 +509,13 @@ td.check-cell { text-align: center; padding: 0 8px !important; }
   flex-direction: column;
   align-items: center;
   gap: 7px;
-  padding: 18px 16px 14px;
+  padding: 20px 16px 14px;
   border-radius: 16px;
   transition: transform .15s, box-shadow .15s;
   cursor: default;
   position: relative;
 }
+.pyr-card-leader { padding-top: 28px; }
 .pyr-card:hover { transform: translateY(-4px); }
 
 .pyr-card-leader {
@@ -536,23 +537,50 @@ td.check-cell { text-align: center; padding: 0 8px !important; }
 }
 .pyr-card-staff:hover { box-shadow: 0 4px 12px rgba(0,0,0,.06); }
 
-/* AVATAR */
-.pyr-avatar {
-  border-radius: 14px;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 800; color: #fff;
-  position: relative;
-}
-.pyr-card-leader    .pyr-avatar { width: 60px; height: 60px; font-size: 1.1rem; border-radius: 16px; }
-.pyr-card-assistant .pyr-avatar { width: 54px; height: 54px; font-size: 1rem;  border-radius: 15px; }
-.pyr-card-staff     .pyr-avatar { width: 46px; height: 46px; font-size: .85rem; border-radius: 13px; }
-
-.pyr-crown {
+/* AVATAR - Bottts Robot */
+.pyr-crown-wrap {
   position: absolute;
-  top: -10px; left: 50%;
+  top: -14px; left: 50%;
   transform: translateX(-50%);
-  font-size: .9rem;
+  font-size: 1rem;
   line-height: 1;
+  z-index: 2;
+}
+.pyr-avatar-bot {
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+.pyr-avatar-bot img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  image-rendering: auto;
+}
+.pyr-avatar-fallback {
+  width: 100%; height: 100%;
+  align-items: center; justify-content: center;
+  font-weight: 800; color: #fff; font-size: 1rem;
+  background: #6366f1;
+}
+.pyr-avatar-leader {
+  width: 80px; height: 80px;
+  border-radius: 20px;
+  border: 3px solid #fbbf24;
+  box-shadow: 0 4px 20px rgba(251,191,36,.25);
+}
+.pyr-avatar-assistant {
+  width: 68px; height: 68px;
+  border-radius: 17px;
+  border: 2px solid #a5b4fc;
+  box-shadow: 0 4px 14px rgba(165,180,252,.2);
+}
+.pyr-avatar-staff {
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  border: 2px solid #e2e8f0;
 }
 
 /* NAME */

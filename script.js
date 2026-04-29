@@ -193,8 +193,6 @@ async function loadSchedule() {
   const startDate = `${currentYear}-${String(currentMonth).padStart(2,'0')}-01`;
   const endDate = `${currentYear}-${String(currentMonth).padStart(2,'0')}-${String(lastDay).padStart(2,'0')}`;
 
-  console.log('[loadSchedule] querying:', startDate, 'to', endDate);
-
   const { data, error } = await db
     .from('schedules')
     .select('*')
@@ -207,8 +205,6 @@ async function loadSchedule() {
     tbody.innerHTML = `<tr><td colspan="13" class="empty-row">Failed to load schedule: ${error.message}</td></tr>`;
     return;
   }
-
-  console.log('[loadSchedule] rows returned:', data?.length, data);
 
   // Sort: morning before evening after fetching
   data && data.sort((a, b) => {
@@ -450,9 +446,7 @@ function renderStaffGrid() {
   const staff      = staffData.filter(s => !s.role || s.role === 'staff');
 
   function makeCard(s, i, tier) {
-    const initials = s.name.slice(0, 2).toUpperCase();
-    const color = AVATAR_COLORS[staffData.indexOf(s) % AVATAR_COLORS.length];
-    const crown = tier === 'leader' ? '<span class="pyr-crown">👑</span>' : '';
+    const crown = tier === 'leader' ? '<div class="pyr-crown-wrap"><span class="pyr-crown">👑</span></div>' : '';
     const badgeText = tier === 'leader' ? 'Leader' : tier === 'assistant' ? 'Assistant' : '';
     const badge = badgeText ? `<span class="pyr-role-badge pyr-badge-${tier}">${badgeText}</span>` : '';
     const adminActions = isAdmin ? `
@@ -461,9 +455,17 @@ function renderStaffGrid() {
         <button class="btn-del" onclick="openDeleteStaffModal('${s.id}', '${s.name}')">Remove</button>
       </div>` : '';
 
+    // DiceBear Bottts Robot avatar
+    const bgColor = tier === 'leader' ? 'fef3c7' : tier === 'assistant' ? 'e0e7ff' : 'f1f5f9';
+    const avatarUrl = `https://api.dicebear.com/9.x/bottts/svg?seed=${encodeURIComponent(s.name)}&backgroundColor=${bgColor}`;
+
     return `
       <div class="pyr-card pyr-card-${tier}">
-        <div class="pyr-avatar" style="background:${color}">${crown}${initials}</div>
+        ${crown}
+        <div class="pyr-avatar-bot pyr-avatar-${tier}">
+          <img src="${avatarUrl}" alt="${s.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="pyr-avatar-fallback" style="display:none">${s.name.slice(0,2).toUpperCase()}</div>
+        </div>
         <div class="pyr-name">${s.name}</div>
         ${badge}
         ${adminActions}
@@ -780,19 +782,16 @@ async function saveSchedule() {
     }
   }
 
-  console.log('[saveSchedule] inserting rows:', rows);
   const { data: insertData, error } = await db.from('schedules').insert(rows).select();
 
   btn.disabled = false;
   document.getElementById('saveBtnText').textContent = 'Save Schedule';
 
   if (error) {
-    console.error('[saveSchedule] insert error:', error);
     errEl.textContent = 'Error: ' + error.message;
     return;
   }
 
-  console.log('[saveSchedule] insert success:', insertData);
   closeScheduleModal();
   showToast(`${totalDays} day${totalDays > 1 ? 's' : ''} saved ✓`, 'success');
   await loadSchedule();
