@@ -17,8 +17,8 @@ let scheduleData = [];
 let deleteTargetId = null;
 let editTargetId = null;
 
-const WEBSITES = ['suria88', 'hakabet', 'viobet', 'tempo88', 'fila88', 'ijobet', 'hahawin88', 'lola88', 'kiko333'];
-const WEBSITE_LABELS = ['SURIA88', 'HAKABET', 'VIOBET', 'TEMPO88', 'FILA88', 'IJOBET', 'HAHAWIN88', 'LOLA88', 'KIKO333'];
+const WEBSITES = ['suria88', 'hakabet', 'viobet', 'tempo88', 'fila88', 'ijobet', 'hahawin88', 'lola88'];
+const WEBSITE_LABELS = ['SURIA88', 'HAKABET', 'VIOBET', 'TEMPO88', 'FILA88', 'IJOBET', 'HAHAWIN88', 'LOLA88'];
 
 let staffData = []; // loaded from Supabase
 
